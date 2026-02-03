@@ -3,15 +3,6 @@ variable "virginia_cidr" {
   type        = string
 }
 
-# variable "public_subnet" {
-#   description = "CIDR Public Subnet"
-#   type        = string
-# }
-
-# variable "private_subnet" {
-#   description = "CIDR Private Subnet"
-#   type        = string
-# }
 
 variable "subnets" {
   description = "Lista de Subnets"
@@ -86,19 +77,6 @@ variable "az_subnets" {
   default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
-
-# (Opcional) CIDRs para el endpoint público (si tu módulo lo soporta)
-# variable "public_access_cidrs" {
-#   type        = list(string)
-#   default     = ["TU.IP.PUBLICA/32"] # agrega tu IP si deseas restringir
-# }
-
-# Subnets para el cluster y los node groups (2 AZ distintas recomendado)
-# variable "subnets_id" {
-#   type        = list(string)
-#   description = "Subnets del cluster/node groups"
-# }
-
 ######Referencia instancias EKS######
 # Especificaciones del Node Group
 variable "eks_specs" {
@@ -116,11 +94,6 @@ variable "instancias_eks" {
   type        = set(string)
   default     = ["Dev_EKS", "Dev_EKS1"]
 }
-
-# # Sufijo para tags del cluster
-# locals {
-#   sufix = "andres03"
-# }
 
 ###############################
 # Variables generales

@@ -91,28 +91,4 @@ resource "aws_security_group" "sg_public_instance" {
 }
 
 
-# module "my_bucket" {
-#   source      = "./modulos/s3"
-#   bucket_name = "andresarenas030989"
-
-# }
-# output "my_bucket_arn" {
-#   value = module.my_bucket.s3_bucket_arn
-# }
-
-## Modulo para guardar el terraform state proveedor CloudPosse
-# module "terraform_state_backend" {
-#   source     = "cloudposse/tfstate-backend/aws"
-#   version    = "1.7.0"
-#   namespace  = "ejemploUso"
-#   stage      = "Env"
-#   name       = "terraform"
-#   attributes = ["state"]
-
-#   terraform_backend_config_file_path = "."
-#   terraform_backend_config_file_name = "backend.tf"
-
-#   force_destroy = false
-# }
-
 
