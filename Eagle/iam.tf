@@ -31,6 +31,9 @@ resource "aws_iam_role" "eks_node_role" {
   })
 }
 
+resource "aws_iam_group" "cluster_group" {
+  name = "eks-cluster-group"
+}
 
 # Políticas administradas requeridas para nodos EKS
 resource "aws_iam_role_policy_attachment" "eks_worker_node_policy" {
@@ -46,5 +49,15 @@ resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
 resource "aws_iam_role_policy_attachment" "ec2_container_registry_read_only" {
   role       = aws_iam_role.eks_node_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
+
+resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
+  role       = aws_iam_role.cluster_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
+
+resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSVPCResourceController" {
+  role       = aws_iam_role.cluster_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
 }
 

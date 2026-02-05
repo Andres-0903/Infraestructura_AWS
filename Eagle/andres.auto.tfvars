@@ -22,10 +22,10 @@ enable_monitoring = false
 
 ingress_port_list = [22, 80, 443]
 
-subnets_id = [
-  "subnet-0ff513bd832e532cc",
-  "subnet-088d514840cc19132"
-]
+# subnets_id = [
+#   "subnet-0ff513bd832e532cc",
+#   "subnet-088d514840cc19132"
+# ]
 
 eks_specs = {
   tipo_instancia = ["t3.small", "t3a.small"] # agrega más si vuelves a SPOT

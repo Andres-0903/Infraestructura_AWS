@@ -9,11 +9,6 @@ variable "subnets" {
   type        = list(string)
 }
 
-variable "subnets_id" {
-  description = "Subnet ID"
-  type        = list(string)
-}
-
 variable "tags" {
   description = "Tags del proyecto"
   type        = map(string)
@@ -46,19 +41,18 @@ variable "enable_monitoring" {
   type        = bool
 }
 
-
-# Nombre del cluster y versión
 variable "cluster_name" {
   type        = string
   description = "Nombre del cluster EKS"
+  default     = "Monitoring_Andres"
 }
 
 variable "kubernetes_version" {
   type        = string
   description = "Versión de Kubernetes (ej: 1.35)"
+  default     = "1.35" # SIN .0
 }
 
-# Endpoints del API Server
 variable "endpoint_private_access" {
   type        = bool
   description = "Enable Private Endpoint"
@@ -68,8 +62,29 @@ variable "endpoint_private_access" {
 variable "endpoint_public_access" {
   type        = bool
   description = "Enable Public Endpoint"
-
+  default     = true
 }
+
+variable "eks_specs" {
+  description = "Especificaciones instancias EKS"
+  type = object({
+    tipo_instancia = list(string)
+    ami_type       = string
+    tipo_capacidad = string
+  })
+  default = {
+    tipo_instancia = ["t3.small", "t3a.small"] # agrega más si vas a SPOT después
+    ami_type       = "AL2023_x86_64_STANDARD"
+    tipo_capacidad = "ON_DEMAND" # valida OD; luego pasas a SPOT
+  }
+}
+
+variable "instancias_eks" {
+  description = "Nombres lógicos de Node Groups"
+  type        = set(string)
+  default     = ["Dev_EKS"] # empieza solo con 1 NG para validar rápido
+}
+
 
 variable "az_subnets" {
   description = "Availability Zones"
@@ -77,23 +92,6 @@ variable "az_subnets" {
   default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
-######Referencia instancias EKS######
-# Especificaciones del Node Group
-variable "eks_specs" {
-  description = "Especificaciones instancias EKS"
-  type = object({
-    tipo_instancia = list(string) # ej: ["t3.small","t3a.small","t3.micro","t3a.micro"]
-    ami_type       = string       # ej: "AL2023_x86_64_STANDARD" (o dejar vacío y comentar la línea en el NG)
-    tipo_capacidad = string       # "SPOT" o "ON_DEMAND"
-  })
-}
-
-# Para crear múltiples Node Groups de la misma configuración
-variable "instancias_eks" {
-  description = "Nombres lógicos de los Node Groups"
-  type        = set(string)
-  default     = ["Dev_EKS", "Dev_EKS1"]
-}
 
 ###############################
 # Variables generales

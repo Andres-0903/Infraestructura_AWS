@@ -11,23 +11,23 @@ resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.VPC_Virginia.id
   cidr_block              = var.subnets[0]
   map_public_ip_on_launch = true
-  tags = {
-    "Name" = "Public_Subnet-${local.sufix}"
-  }
+  availability_zone       = var.az_subnets[0]
 
-  availability_zone = var.az_subnets[0]
+  tags = {
+    Name                                        = "Public_Subnet-${local.sufix}"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+  }
 }
 
 resource "aws_subnet" "private_subnet" {
-  vpc_id     = aws_vpc.VPC_Virginia.id
-  cidr_block = var.subnets[1]
-  tags = {
-    "Name" = "Private_Subnet-${local.sufix}"
-  }
+  vpc_id            = aws_vpc.VPC_Virginia.id
+  cidr_block        = var.subnets[1]
   availability_zone = var.az_subnets[1]
 
-  depends_on = [
-  aws_subnet.public_subnet]
+  tags = {
+    Name                                        = "Private_Subnet-${local.sufix}"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+  }
 }
 
 resource "aws_internet_gateway" "IGW" {
